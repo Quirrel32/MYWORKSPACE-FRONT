@@ -32,7 +32,7 @@
                         <el-dropdown-menu>
                             <el-dropdown-item @click="updateAvatar">修改头像</el-dropdown-item>
                             <el-dropdown-item @click="updatePassword">修改密码</el-dropdown-item>
-                            <el-dropdown-item>退出</el-dropdown-item>
+                            <el-dropdown-item @click="logout">退出</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -83,6 +83,10 @@ import{ref,reactive,getCurrentInstance,nextTick, watch} from 'vue'
 import { useRouter,useRoute } from 'vue-router';
 const { proxy } = getCurrentInstance();
 const router = useRouter();
+
+const api ={
+    logout:"/logout"
+}
 
 const timestamp = ref(0)
 const route = useRoute();
@@ -227,6 +231,22 @@ const updatePasswordRef = ref()
 const updatePassword =()=>{
     updatePasswordRef.value.show()
 }
+
+//退出
+const logout = async() => {
+    proxy.Confirm(`你确定要退出吗`, async()=>{
+        let result = await proxy.Request({
+        url:api.logout
+    })
+    if(!result){
+        return
+    }
+    proxy.VueCookies.remove("userInfo")
+    router.push("/login")
+    })
+    
+}
+
 </script>
 <style lang="scss" scoped>
 .header {
