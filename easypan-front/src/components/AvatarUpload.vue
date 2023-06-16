@@ -6,8 +6,8 @@
             </template>
             <template v-else>
                 <img 
-                :src="`${modelValue.qqAvatar}`"
-                v-if="modelValue && modelValue.qqAvatar"
+                    :src="`${modelValue.qqAvatar}`"
+                    v-if="modelValue && modelValue.qqAvatar"
                 />
                 <img :src="`/api/getAvatar/${modelValue.userId}`" v-else/>
             </template> 
@@ -62,7 +62,7 @@ const uploadImage = async (file) => {
     align-items: end;
     .avatar-show {
         background: rgb(245,245,245);
-        width: 250px;
+        width: 150px;
         height: 150px;
         display: flex;
         align-items: center;

@@ -4,13 +4,12 @@
             :show="dialogConfig.show"
             :title="dialogConfig.title"
             :buttons="dialogConfig.buttons"
-            width="400px"
+            width="500px"
             :showCancel="false"
             @close="dialogConfig.show = false"
         >
         <el-form
             :model="formData"
-            :rules="rules"
             ref="formDataRef"
             label-width="80px"
             @submit.prevent
@@ -38,13 +37,11 @@ const api = {
 
 const formData = ref({})
 const formDataRef = ref()
-const rules ={
-    title: [{required: true,message:'请输入内容'}]
-}
+
 
 const show = (data)=>{
     formData.value = Object.assign({},data);
-    formData.value.avatar = {userId:data.userId,qqAvatar:data.avatar}
+    formData.value.avatar = {userId: data.userId, qqAvatar: data.avatar}
     dialogConfig.value.show = true
 }
 
@@ -55,7 +52,7 @@ const dialogConfig = ref({
     title:"修改头像",
     buttons:[
         {
-            type:'danger',
+            type:'primary',
             text:'确定',
             click:(e)=>{
                 submitForm();   
@@ -63,8 +60,30 @@ const dialogConfig = ref({
         }
     ]
 })
+const emit = defineEmits();
+const submitForm = async () =>{
+    if(!(formData.value.avatar instanceof File)){
+        dialogConfig.value.show = false
+        return
+    }
+
+    let result = await proxy.Request({
+        url: api.updateUserAvatar,
+        params:{
+            avatar: formData.value.avatar
+        }
+    })
+    if(!result){
+        return
+    }
+    dialogConfig.value.show = false
+    const cookieUserInfo = proxy.VueCookies.get("userInfo")
+    delete cookieUserInfo.avatar
+    proxy.VueCookies.set("userInfo",cookieUserInfo,0)
+    emit("updateAvatar")
+}
 </script>
 
 <style lang="scss" scoped>
 
-</style>
+</style>    

@@ -32,6 +32,6 @@ app.config.globalProperties.Message = Message
 app.config.globalProperties.Request = Request
 app.config.globalProperties.VueCookies = VueCookies
 app.config.globalProperties.globalInfo = {
-    avatarUrl: '/api/get/Avatar/'
+    avatarUrl: '/api/getAvatar/'
 }
 app.mount('#app')

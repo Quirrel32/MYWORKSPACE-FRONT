@@ -31,7 +31,7 @@
                     <template #dropdown>
                         <el-dropdown-menu>
                             <el-dropdown-item @click="updateAvatar">修改头像</el-dropdown-item>
-                            <el-dropdown-item>修改密码</el-dropdown-item>
+                            <el-dropdown-item @click="updatePassword">修改密码</el-dropdown-item>
                             <el-dropdown-item>退出</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
@@ -66,11 +66,19 @@
                 </RouterView>
             </div>
         </div>
-        <UpdateAvatar ref="updateAvatarRef"></UpdateAvatar>
+        <UpdateAvatar 
+        ref="updateAvatarRef" 
+        @updateAvatar="reloadAvatar"
+        ></UpdateAvatar>
+
+        <UpdatePassword
+        ref="updatePasswordRef"
+        ></UpdatePassword>
     </div>
 </template>
 <script setup>
 import UpdateAvatar from './UpdateAvatar.vue'
+import UpdatePassword from './UpdatePassword.vue'
 import{ref,reactive,getCurrentInstance,nextTick, watch} from 'vue'
 import { useRouter,useRoute } from 'vue-router';
 const { proxy } = getCurrentInstance();
@@ -207,6 +215,17 @@ watch(
 const updateAvatarRef = ref()
 const updateAvatar =()=>{
     updateAvatarRef.value.show(userInfo.value)
+};
+
+const reloadAvatar =()=>{
+    userInfo.value = proxy.VueCookies.get("userInfo")
+    timestamp.value = new Date().getTime()
+};
+
+//修改密码
+const updatePasswordRef = ref()
+const updatePassword =()=>{
+    updatePasswordRef.value.show()
 }
 </script>
 <style lang="scss" scoped>
