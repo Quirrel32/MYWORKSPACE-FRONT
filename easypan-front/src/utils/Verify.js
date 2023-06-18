@@ -4,9 +4,9 @@ const regs = {
     password: /^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z~!@#$%^&*_]{8,}$/,
     shareCode: /^[A-Za-z0-9]+$/
 }
-const verify = (rule,value,reg,callback)=>{
-    if(value) {
-        if(reg.test(value)) {
+const verify = (rule, value, reg, callback) => {
+    if (value) {
+        if (reg.test(value)) {
             callback()
         } else {
             callback(new Error(rule.message))
@@ -17,16 +17,16 @@ const verify = (rule,value,reg,callback)=>{
 }
 
 export default {
-    email: (rule , value, callback) => {
-        return verify(rule,value,regs.email,callback)
+    email: (rule, value, callback) => {
+        return verify(rule, value, regs.email, callback)
     },
-    number: (rule , value, callback) => {
-        return verify(rule,value,regs.number,callback)
+    number: (rule, value, callback) => {
+        return verify(rule, value, regs.number, callback)
     },
-    password: (rule , value, callback) => {
-        return verify(rule,value,regs.password,callback)
+    password: (rule, value, callback) => {
+        return verify(rule, value, regs.password, callback)
     },
-    shareCode: (rule , value, callback) => {
-        return verify(rule,value,regs.shareCode,callback)
-    }
+    shareCode: (rule, value, callback) => {
+        return verify(rule, value, regs.shareCode, callback)
+    },
 }

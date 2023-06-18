@@ -2,7 +2,7 @@
     <div>登陆中,请勿刷新页面</div>
 </template>
 
-<script>
+<script setup>
 import { ref,reactive,getCurrentInstance,nextTick } from 'vue'
 import { useRouter,useRoute } from 'vue-router';
 const { proxy } = getCurrentInstance();
